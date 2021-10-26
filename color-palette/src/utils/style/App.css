@@ -1,0 +1,18 @@
+.container {
+  margin: 2rem;
+  font-size: 2rem;
+}
+
+.main-btn {
+  font-size: 1.5rem;
+  margin: 0 10px;
+}
+
+.btn-in-line {
+  font-size: 1rem;
+  margin: 0 10px;
+}
+
+.color_div {
+  display: block;
+}
