@@ -1,5 +1,3 @@
-//import "./style/Dot.css";
-
 export default function Dot({ color }) {
   const style = {
     height: 25,

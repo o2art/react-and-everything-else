@@ -1,7 +1,7 @@
-import db from "../firebase/firebase";
+import db from "../../firebase/firebase";
 import { updateDoc, doc } from "@firebase/firestore"; //set != update
 
-export const handleEdit = async (id) => {
+export const handleLogin = async (id) => {
   const name = prompt("Name a color");
   const value = prompt("Name it value");
   const docRef = doc(db, "colors", id);

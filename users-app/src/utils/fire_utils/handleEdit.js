@@ -1,4 +1,4 @@
-import db from "../firebase/firebase";
+import db from "../../firebase/firebase";
 import { updateDoc, doc } from "@firebase/firestore"; //set != update
 
 export const handleEdit = async (id) => {
