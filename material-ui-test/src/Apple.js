@@ -22,7 +22,7 @@ export default function Apple() {
       <Container maxWidth="xs">
         <CssBaseline />
         <Grid container>
-          <Typography> Gówno </Typography>
+          <Typography> Sranie </Typography>
         </Grid>
       </Container>
     </ThemeProvider>
