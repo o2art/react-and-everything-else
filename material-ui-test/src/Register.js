@@ -41,7 +41,7 @@ const CssTextField = styled(TextField)({
   },
 });
 
-export default function Apple() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -56,7 +56,7 @@ export default function Apple() {
           if (validator.isStrongPassword(password)) {
             console.log(email, password);
           } else {
-            setError("wrong password");
+            setError("weak password");
           }
         } else {
           setError("wrong email");
@@ -118,7 +118,7 @@ export default function Apple() {
                 TODOs app
               </Typography>
               <Typography variant="body2">
-                Login to your account for smart task list for everyday use
+                Create your account to save your plans and ideas quickly!
               </Typography>
             </Grid>
             <Grid item xs={6}>
@@ -153,24 +153,24 @@ export default function Apple() {
                 color="secondary"
                 disabled={currentUser}
               >
-                Log in
+                Register
               </Button>
             </Grid>
           </Grid>
           <Grid container spacing={3} style={{ paddingTop: 10 }}>
-            <Grid item xs={5}>
+            <Grid item xs={7}>
               <Typography variant="body2">
-                Forget pass?{" "}
-                <Link style={{ cursor: "pointer" }} to={"restorepassword"}>
-                  Restore{" "}
+                Already have an account?{" "}
+                <Link style={{ cursor: "pointer" }} to={"/"}>
+                  Log in{" "}
                 </Link>
               </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={5}>
               <Typography variant="body2">
-                Dont have an account?{" "}
-                <Link style={{ cursor: "pointer" }} to={"register"}>
-                  Sign up
+                Forget pass?{" "}
+                <Link style={{ cursor: "pointer" }} to={"/restorepassword"}>
+                  Restore{" "}
                 </Link>
               </Typography>
             </Grid>

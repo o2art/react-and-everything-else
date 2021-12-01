@@ -14,10 +14,6 @@ export const Home = () => {
 
   return (
     <div className="App">
-      <div className="logged-in">
-        {" "}
-        Currently logged in as: {currentUser?.email}{" "}
-      </div>
       <div className="login">
         <input type="text" placeholder="email" ref={emailRef} />
         <input type="password" placeholder="password" ref={passwordRef} />

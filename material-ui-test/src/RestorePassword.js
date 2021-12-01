@@ -41,33 +41,20 @@ const CssTextField = styled(TextField)({
   },
 });
 
-export default function Apple() {
+export default function RestorePassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const [currentUser, setCurrentUser] = useState(false);
-
   const handleSubmit = () => {
-    setCurrentUser(true);
     if (email.length > 0) {
-      if (password.length > 0) {
-        if (validator.isEmail(email)) {
-          if (validator.isStrongPassword(password)) {
-            console.log(email, password);
-          } else {
-            setError("wrong password");
-          }
-        } else {
-          setError("wrong email");
-        }
+      if (validator.isEmail(email)) {
+        console.log(email);
       } else {
-        setError("password cannot be empty");
+        setError("wrong email");
       }
     } else {
       setError("email cannot be empty");
     }
-    setCurrentUser(false);
   };
 
   return (
@@ -118,10 +105,10 @@ export default function Apple() {
                 TODOs app
               </Typography>
               <Typography variant="body2">
-                Login to your account for smart task list for everyday use
+                Type your email to recover password
               </Typography>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <CssTextField
                 required
                 label="Email"
@@ -133,43 +120,34 @@ export default function Apple() {
                 variant="outlined"
               />
             </Grid>
-            <Grid item xs={6}>
-              <CssTextField
-                required
-                label="Password"
-                name="password"
-                type="password"
-                value={password}
-                inputProps={{ maxLength: 20 }}
-                onInput={(e) => setPassword(e.target.value)}
-                onClick={() => setError("")}
-                variant="outlined"
-              />
-            </Grid>
             <Grid item xs>
               <Button
                 onClick={handleSubmit}
                 variant="contained"
                 color="secondary"
-                disabled={currentUser}
               >
-                Log in
+                Send email
               </Button>
             </Grid>
           </Grid>
           <Grid container spacing={3} style={{ paddingTop: 10 }}>
-            <Grid item xs={5}>
+            <Grid item xs={6}>
               <Typography variant="body2">
-                Forget pass?{" "}
-                <Link style={{ cursor: "pointer" }} to={"restorepassword"}>
-                  Restore{" "}
+                Already have an account?{" "}
+                <Link style={{ cursor: "pointer" }} to={"/"}>
+                  Log in{" "}
                 </Link>
               </Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={5}>
               <Typography variant="body2">
-                Dont have an account?{" "}
-                <Link style={{ cursor: "pointer" }} to={"register"}>
+                Don't have an account?{" "}
+                <Link
+                  style={{ cursor: "pointer" }}
+                  to={"/register"}
+                  color="primary"
+                >
                   Sign up
                 </Link>
               </Typography>
