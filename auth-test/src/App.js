@@ -1,25 +1,55 @@
-import "./style/App.css";
-import "./firebase/config";
 import { useAuth } from "./firebase";
-import { useRoutes } from "hookrouter";
 
-import { Wrapper } from "./components/Wrapper";
-import { Home, User, NotFound } from "./pages";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
-const routes = {
-  "/": () => <Home />,
-  "/:user": ({ user }) => <User user={{ user }} />,
-};
+import {
+  Home,
+  Register,
+  Login,
+  RestorePassword,
+  ProtectedRoutes,
+  Todos,
+} from "./pages";
 
-function App() {
-  useRoutes(routes);
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import { theme } from "./style/theme";
+
+export default function App() {
   const currentUser = useAuth();
 
   return (
-    <Wrapper>
-      {(currentUser ? <User user={currentUser} /> : <Home />) || <NotFound />}
-    </Wrapper>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <CssBaseline />
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={currentUser ? <Navigate to="/todos" /> : <Home />}
+          />
+          <Route
+            path="/register"
+            element={currentUser ? <Navigate to="/todos" /> : <Register />}
+          />
+          <Route
+            path="/login"
+            element={currentUser ? <Navigate to="/todos" /> : <Login />}
+          />
+          <Route path="/restorepassword" element={<RestorePassword />} />
+          <Route
+            path="/todos"
+            element={
+              currentUser ? <Todos user={currentUser} /> : <Navigate to="/" />
+            }
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
   );
 }
-
-export default App;

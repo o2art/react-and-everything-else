@@ -1,49 +1,68 @@
-import React, { useRef } from "react";
-import { handleSignUp, handleLogin, useAuth } from "../firebase/index";
+import React from "react";
+
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
+import NavBar from "../components/NavBar";
+import Section from "../components/Section";
+
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "../style/theme";
 
 export const Home = () => {
-  const currentUser = useAuth();
-
-  const emailRef = useRef();
-  const passwordRef = useRef();
-
-  const clearInput = () => {
-    emailRef.current.value = "";
-    passwordRef.current.value = "";
-  };
-
   return (
-    <div className="App">
-      <div className="login">
-        <input type="text" placeholder="email" ref={emailRef} />
-        <input type="password" placeholder="password" ref={passwordRef} />
-        <button
-          onClick={() => {
-            try {
-              handleSignUp(emailRef.current.value, passwordRef.current.value);
-              clearInput();
-            } catch (e) {
-              alert(e.message);
-            }
-          }}
-          disabled={currentUser}
-        >
-          sign up
-        </button>
-        <button
-          onClick={() => {
-            try {
-              handleLogin(emailRef.current.value, passwordRef.current.value);
-              clearInput();
-            } catch (e) {
-              alert(e.message);
-            }
-          }}
-          disabled={currentUser}
-        >
-          log in
-        </button>
-      </div>
-    </div>
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="xl">
+        <CssBaseline />
+        <NavBar />
+        <Grid container spacing={2} sx={{ flexGrow: 1, marginTop: 10 }}>
+          <Grid item container spacing={2} sx={{ flexGrow: 1, marginTop: 10 }}>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+          </Grid>
+          <Grid item container spacing={2} sx={{ flexGrow: 1, marginTop: 10 }}>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+          </Grid>
+          <Grid item container spacing={2} sx={{ flexGrow: 1, marginTop: 10 }}>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+            <Grid item xs>
+              <Section />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Container>
+    </ThemeProvider>
   );
 };

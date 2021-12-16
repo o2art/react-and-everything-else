@@ -102,7 +102,7 @@ export default function Apple() {
             </Alert>
           ) : null}
         </div>
-        <Grid container xs={12}>
+        <Grid container>
           <Grid item style={{ margin: "0 auto", paddingTop: 20 }}>
             <FireplaceIcon color="primary" style={{ fontSize: 100 }} />
           </Grid>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { db } from "../firebase/config";
 import { collection, onSnapshot } from "@firebase/firestore";
 import {
@@ -8,35 +8,24 @@ import {
   handleDeleteQuery,
   handleLogout,
 } from "../firebase";
-import "../style/User.css";
 
-export const User = ({ user }) => {
+export function Todos({ user }) {
   const _id = user.uid;
   const [todos, setTodos] = useState([{ todo: "Loading ...", id: "initial" }]);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const collRef = collection(db, "users", _id, "todos");
     onSnapshot(collRef, (snapshot) => {
       setTodos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="container">
-      <h2> currently logged in user: {user.email}</h2>
-      <button className="main-btn" onClick={() => handleNew(_id)}>
-        New
-      </button>
-      <button
-        className="main-btn"
-        onClick={() => {
-          alert("todo");
-          //handleDeleteQuery(_id)
-        }}
-      >
-        Delete query
-      </button>
+    <div>
+      <button onClick={() => handleNew(_id)}>new</button>
       <ul style={{ listStyleType: "none" }}>
         {todos.map((todo) => (
           <li className="color_div" key={todo.id}>
@@ -45,8 +34,8 @@ export const User = ({ user }) => {
               onClick={() => {
                 try {
                   handleEdit(_id, todo.todo, todo.id);
-                } catch (e) {
-                  alert(e.message);
+                } catch (err) {
+                  alert(err.message);
                 }
               }}
             >
@@ -68,11 +57,7 @@ export const User = ({ user }) => {
           </li>
         ))}
       </ul>
-      <button className="logout" onClick={handleLogout}>
-        log out
-      </button>
+      <button onClick={handleLogout}>log out</button>
     </div>
   );
-};
-
-export default User;
+}
