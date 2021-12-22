@@ -1,11 +1,16 @@
 import { auth } from "../config";
-import { signInWithEmailAndPassword } from "@firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  setPersistence,
+  browserSessionPersistence,
+} from "@firebase/auth";
 
 import validate from "./validate";
 
 export async function handleLogin(email, password, callback) {
   validate(email, password, async (res) => {
     if (res) {
+      await setPersistence(auth, browserSessionPersistence);
       try {
         await signInWithEmailAndPassword(auth, email, password);
         console.info("User logged in successfully");

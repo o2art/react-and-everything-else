@@ -1,18 +1,12 @@
 import { db } from "../config";
-import { collection, query, getDocs, where } from "@firebase/firestore";
-import { handleDelete } from "./handleDelete";
+import { deleteDoc, doc } from "@firebase/firestore";
 
-export const handleDeleteQuery = async (id) => {
-  const todos = prompt("Name of todos");
-  if (todos != null) {
-    const collRef = collection(db, "users", id, "todos");
-    const q = query(collRef, where("todo", "==", todos));
-    const snapshot = await getDocs(q);
-    //console.log(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    const results = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-    results.forEach(async (result) => {
-      handleDelete(id, result.id);
-    });
+export const handleDeleteQuery = async (id, todos, checked) => {
+  console.log(id, todos, checked);
+  for (let i = 0; i < checked.length; i++) {
+    if (checked[i]) {
+      const docRef = doc(db, "users", id, "todos", todos[i].id);
+      await deleteDoc(docRef);
+    }
   }
 };
