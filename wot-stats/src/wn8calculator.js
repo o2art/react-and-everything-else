@@ -1,7 +1,21 @@
 import wn8exp from "./wn8exp.json";
-import tanks from "./tanks.json";
 
-export default function wn8calculator() {
+export default async function wn8calculator(id, callback) {
+  const initVehicles = async (id) => {
+    await fetch(
+      `https://api.worldoftanks.eu/wot/tanks/stats/?application_id=254f815bda44b4c204467032a61f6836&account_id=${id}&extra=random`
+    )
+      .then((res) => res.json())
+      .then(({ data }) => {
+        let obj = Object(data);
+        calcWN8(Object.values(obj)[0], callback);
+      });
+  };
+
+  return initVehicles(id);
+}
+
+const calcWN8 = (tanks, callback) => {
   let RatingWN8_TotalDamage = 0;
   let RatingWN8_TotalFrag = 0;
   let RatingWN8_TotalSpot = 0;
@@ -14,20 +28,19 @@ export default function wn8calculator() {
   let RatingWN8_ExpDef = 0;
   let RatingWN8_ExpWinrate = 0;
 
-  for (let t in tanks["tanks"]) {
+  for (let t in tanks) {
     wn8exp.data.map((element) => {
-      if (element.IDNum === tanks["tanks"][t].tank_id) {
-        RatingWN8_TotalDamage += tanks["tanks"][t].all.damage_dealt;
-        RatingWN8_ExpDamage +=
-          element.expDamage * tanks["tanks"][t].all.battles;
-        RatingWN8_TotalFrag += tanks["tanks"][t].all.frags;
-        RatingWN8_ExpFrag += element.expFrag * tanks["tanks"][t].all.battles;
-        RatingWN8_TotalSpot += tanks["tanks"][t].all.spotted;
-        RatingWN8_ExpSpot += element.expSpot * tanks["tanks"][t].all.battles;
-        RatingWN8_TotalDef += tanks["tanks"][t].all.dropped_capture_points;
-        RatingWN8_ExpDef += element.expDef * tanks["tanks"][t].all.battles;
+      if (element.IDNum === tanks[t].tank_id) {
+        RatingWN8_TotalDamage += tanks[t].all.damage_dealt;
+        RatingWN8_ExpDamage += element.expDamage * tanks[t].all.battles;
+        RatingWN8_TotalFrag += tanks[t].all.frags;
+        RatingWN8_ExpFrag += element.expFrag * tanks[t].all.battles;
+        RatingWN8_TotalSpot += tanks[t].all.spotted;
+        RatingWN8_ExpSpot += element.expSpot * tanks[t].all.battles;
+        RatingWN8_TotalDef += tanks[t].all.dropped_capture_points;
+        RatingWN8_ExpDef += element.expDef * tanks[t].all.battles;
         RatingWN8_ExpWinrate +=
-          (element.expWinRate / 100) * tanks["tanks"][t].all.battles;
+          (element.expWinRate / 100) * tanks[t].all.battles;
       }
       return 0;
     });
@@ -59,5 +72,5 @@ export default function wn8calculator() {
 
   let wn8 = eDAMAGE + eFRAG + eSPOT + eDEF + eWIN;
 
-  return Math.round(wn8);
-}
+  callback(wn8.toFixed(2));
+};
